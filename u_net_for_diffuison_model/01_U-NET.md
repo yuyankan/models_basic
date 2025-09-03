@@ -117,4 +117,17 @@ After understanding the architecture, it’s important to see how U-Net actually
 # 2. spacial unet link: https://www.researchgate.net/figure/U-Net-with-late-spatio-temporal-fusion-On-the-bottom-right-frame-the-Trainable-Temporal_fig1_340989612
 some pictures for u-net spatio
 ![u-net spatio](u-net_spatio.png)
-!(u-net_spatio_2.png)
+![u-net spatio](u-net_spatio_2.png)
+
+
+它不再是单个图像，而是一个视频序列（即多帧图像）。
+
+- **空间处理**：图中用 (Spatial) 标记的模块，通常是标准的卷积层，负责在每一帧内部提取特征。
+  
+- **时间处理**：图中用 (Temporal) 标记的模块，通常是时间注意力层（Temporal Attention）或3D卷积，负责在不同帧之间提取运动信息。
+  
+- **下采样与上采样**：像传统的U-Net一样，它也包含下采样（Down-sampling）和上采样（Up-sampling）路径，以在不同尺度上处理视频。
+  
+- **跳跃连接**：同样保留了U-Net最重要的跳跃连接，将下采样路径中的高分辨率细节信息传递给上采样路径，确保最终生成结果的细节和边缘精度。
+
+总的来说，这个架构的核心就是在传统的图像处理路径上，嵌入了额外的“时间”维度处理能力，让模型不仅能理解每一帧的内容，还能理解帧与帧之间的关系，从而保证视频的连贯性。
